@@ -34,7 +34,7 @@ The thumbnails also work as embedded YouTube players, allowing you to play, paus
 - HTML5
 - CSS3
 - JavaScript
-- PHP
+- JavaScript Vercel Functions
 - YouTube Data API v3
 - YouTube Embed Player
 
@@ -45,7 +45,7 @@ The project does not use a framework or require a build process.
 ```text
 higherLower/
 ├── api/
-│   └── youtubeProxy.php
+│   └── youtubeProxy.mjs
 ├── css/
 │   └── styles.css
 ├── js/
@@ -55,14 +55,13 @@ higherLower/
 └── pest.png
 ```
 
-`youtubeProxy.php` acts as an intermediary between the browser and YouTube, preventing the API key from being sent to the client.
+`youtubeProxy.mjs` is a server-side Vercel Function that acts as an intermediary between the browser and YouTube, preventing the API key from being sent to the client.
 
 ## Local installation
 
 ### Requirements
 
-- PHP 8 or later.
-- HTTPS access from PHP.
+- Node.js and the Vercel CLI.
 - An API key with access to YouTube Data API v3.
 
 ### 1. Clone the repository
@@ -74,66 +73,42 @@ cd higherLower-YoutubeAPI
 
 ### 2. Configure the API key
 
-Create an `api_keys.php` file in the project root:
+Create a `.env.local` file in the project root:
 
-```php
-<?php
-
-$API_KEY = 'YOUR_YOUTUBE_API_KEY';
+```dotenv
+YOUTUBE_API_KEY=YOUR_YOUTUBE_API_KEY
 ```
 
 Do not commit this file to GitHub. Add it to `.gitignore`:
 
-```gitignore
-api_keys.php
-```
-
-The local proxy loads the file with:
-
-```php
-require_once dirname(__DIR__) . '/api_keys.php';
-```
+The included `.gitignore` prevents environment files from being committed.
 
 ### 3. Start the local server
 
+Install the Vercel CLI and start its local development server:
+
 ```bash
-php -S localhost:8000
+npm install --global vercel
+vercel dev
 ```
 
-Open [http://localhost:8000](http://localhost:8000) in your browser.
+Open the local URL displayed by the Vercel CLI.
 
 ## Production configuration
 
-In production, keep the API key outside the public directory. For example:
-
-```text
-/home/USERNAME/
-├── secure/
-│   └── api_key.php
-└── public_html/
-    └── higherLower/
-        ├── api/
-        │   └── youtubeProxy.php
-        └── ...
-```
-
-Update the `require_once` path in `youtubeProxy.php` to match the actual server structure:
-
-```php
-require_once dirname(__DIR__, 3) . '/secure/api_key.php';
-```
+In Vercel, open **Project Settings → Environment Variables** and create a variable named `YOUTUBE_API_KEY`. Apply it to Production, Preview, and Development as needed, then redeploy the project.
 
 When the game is deployed inside a subdirectory, keep the proxy URL relative to the project location:
 
 ```javascript
-const proxyUrl = new URL('api/youtubeProxy.php', document.baseURI);
+const proxyUrl = new URL('api/youtubeProxy', document.baseURI);
 ```
 
 ## Security
 
 - Restrict the API key exclusively to **YouTube Data API v3** in Google Cloud Console.
 - Never store credentials in JavaScript or HTML.
-- Keep the configuration file outside the public directory in production.
+- Store production credentials in Vercel Environment Variables.
 - If a key is exposed accidentally, revoke it and generate a new one.
 
 ## Author
