@@ -1,1 +1,25 @@
+# API keys and environment variables
+api_key.php
 api_keys.php
+.env
+.env.*
+!.env.example
+
+# Vercel local configuration
+.vercel/
+
+# IDE settings
+.idea/
+.vscode/
+
+# Operating system files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs and temporary files
+*.log
+*.tmp
+
+# Generated archives
+*.zip
