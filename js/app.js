@@ -27,7 +27,7 @@ let current;
 let next;
 
 async function fetchVideoData(id) {
-    const proxyUrl = new URL("api/youtubeProxy.php", document.baseURI);
+    const proxyUrl = new URL("api/youtubeProxy", document.baseURI);
     proxyUrl.searchParams.set("id", id);
 
     const response = await fetch(proxyUrl);
