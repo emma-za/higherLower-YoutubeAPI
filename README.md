@@ -1,35 +1,35 @@
 # Higher or Lower · YouTube API
 
-Un juego web inspirado en la dinámica de *Higher or Lower*: compara dos videos de YouTube y adivina si el segundo tiene más o menos visualizaciones que el primero.
+A web game inspired by the classic *Higher or Lower* format. Compare two YouTube videos and guess whether the second video has more or fewer views than the first one.
 
-La aplicación consulta datos reales mediante YouTube Data API v3, revela el resultado con una animación y conserva el mejor puntaje del jugador en su navegador.
+The game retrieves real data from YouTube Data API v3, reveals the result with an animated counter, and saves the player's best score in the browser.
 
-**Demo:** [labs.paginee.com/higherLower](https://labs.paginee.com/higherLower/)
+**Live demo:** [labs.paginee.com/higherLower](https://labs.paginee.com/higherLower/)
 
-## Cómo jugar
+## How to play
 
-1. Observa el número de visualizaciones del video de la izquierda.
-2. Decide si el video de la derecha tiene más (`Higher`) o menos (`Lower`) visualizaciones.
-3. Si aciertas, aumenta tu racha y aparece un nuevo video.
-4. Si fallas, la partida termina y puedes comenzar de nuevo.
+1. Look at the view count of the video on the left.
+2. Decide whether the video on the right has more (`Higher`) or fewer (`Lower`) views.
+3. If your answer is correct, your streak increases and a new video appears.
+4. If your answer is incorrect, the game ends and you can start again.
 
-Las miniaturas también funcionan como reproductores de YouTube: puedes reproducir, pausar y reanudar los videos durante la partida.
+The thumbnails also work as embedded YouTube players, allowing you to play, pause, and resume each video during the game.
 
-## Características
+## Features
 
-- Datos reales de visualizaciones obtenidos desde YouTube.
-- Selección aleatoria de videos sin repeticiones inmediatas.
-- Caché durante la sesión para reducir llamadas a la API.
-- Puntuación actual y récord guardado con `localStorage`.
-- Reproductores integrados de YouTube.
-- Animación de conteo al revelar las visualizaciones.
-- Confeti al responder correctamente.
-- Diseño oscuro inspirado en YouTube.
-- Interfaz dividida al estilo *Higher or Lower*.
-- Diseño adaptable para escritorio, laptop y dispositivos móviles.
-- Manejo visible de errores de red o respuestas inválidas.
+- Real YouTube view counts.
+- Random video selection without immediate repeats.
+- Session caching to reduce API requests.
+- Current score and personal best saved with `localStorage`.
+- Embedded YouTube players.
+- Animated view-count reveal.
+- Confetti after every correct answer.
+- Dark interface inspired by YouTube.
+- Split-screen layout inspired by *Higher or Lower*.
+- Responsive design for desktops, laptops, tablets, and mobile devices.
+- Visible error handling for network failures and invalid responses.
 
-## Tecnologías
+## Technologies
 
 - HTML5
 - CSS3
@@ -38,9 +38,9 @@ Las miniaturas también funcionan como reproductores de YouTube: puedes reproduc
 - YouTube Data API v3
 - YouTube Embed Player
 
-No utiliza frameworks ni requiere un proceso de compilación.
+The project does not use a framework or require a build process.
 
-## Estructura del proyecto
+## Project structure
 
 ```text
 higherLower/
@@ -55,53 +55,59 @@ higherLower/
 └── pest.png
 ```
 
-`youtubeProxy.php` actúa como intermediario entre el navegador y YouTube. De esta forma, la API key nunca se envía al cliente.
+`youtubeProxy.php` acts as an intermediary between the browser and YouTube, preventing the API key from being sent to the client.
 
-## Instalación local
+## Local installation
 
-### Requisitos
+### Requirements
 
-- PHP 8 o superior.
-- Acceso HTTPS desde PHP.
-- Una API key con acceso a YouTube Data API v3.
+- PHP 8 or later.
+- HTTPS access from PHP.
+- An API key with access to YouTube Data API v3.
 
-### 1. Clona el repositorio
+### 1. Clone the repository
 
 ```bash
-git clone https://github.com/emma-za/higherLower-YoutubeAPI
-cd higherLower
+git clone https://github.com/emma-za/higherLower-YoutubeAPI.git
+cd higherLower-YoutubeAPI
 ```
 
-### 2. Configura la API key
+### 2. Configure the API key
 
-Crea `api_keys.php` en la raíz del proyecto:
+Create an `api_keys.php` file in the project root:
 
 ```php
 <?php
 
-$API_KEY = 'TU_API_KEY_DE_YOUTUBE';
+$API_KEY = 'YOUR_YOUTUBE_API_KEY';
 ```
 
-El proxy local utiliza esta ruta:
+Do not commit this file to GitHub. Add it to `.gitignore`:
+
+```gitignore
+api_keys.php
+```
+
+The local proxy loads the file with:
 
 ```php
 require_once dirname(__DIR__) . '/api_keys.php';
 ```
 
-### 3. Inicia el servidor
+### 3. Start the local server
 
 ```bash
 php -S localhost:8000
 ```
 
-Abre [http://localhost:8000](http://localhost:8000) en el navegador.
+Open [http://localhost:8000](http://localhost:8000) in your browser.
 
-## Configuración en producción
+## Production configuration
 
-En producción, guarda la API key fuera del directorio público. Una estructura posible es:
+In production, keep the API key outside the public directory. For example:
 
 ```text
-/home/USUARIO/
+/home/USERNAME/
 ├── secure/
 │   └── api_key.php
 └── public_html/
@@ -111,25 +117,25 @@ En producción, guarda la API key fuera del directorio público. Una estructura 
         └── ...
 ```
 
-Después, ajusta el `require_once` de `youtubeProxy.php` según la estructura real del servidor:
+Update the `require_once` path in `youtubeProxy.php` to match the actual server structure:
 
 ```php
 require_once dirname(__DIR__, 3) . '/secure/api_key.php';
 ```
 
-Si publicas el juego dentro de una subcarpeta, conserva la ruta relativa del proxy en JavaScript:
+When the game is deployed inside a subdirectory, keep the proxy URL relative to the project location:
 
 ```javascript
 const proxyUrl = new URL('api/youtubeProxy.php', document.baseURI);
 ```
 
-## Seguridad
+## Security
 
-- Restringe la API key exclusivamente a **YouTube Data API v3** desde Google Cloud Console.
-- Nunca guardes credenciales dentro de JavaScript o HTML.
-- Mantén el archivo de configuración fuera del directorio público en producción.
-- Si una clave se publica accidentalmente, revócala y genera una nueva.
+- Restrict the API key exclusively to **YouTube Data API v3** in Google Cloud Console.
+- Never store credentials in JavaScript or HTML.
+- Keep the configuration file outside the public directory in production.
+- If a key is exposed accidentally, revoke it and generate a new one.
 
-## Autor
+## Author
 
-Creado por [@emm_zaid](https://x.com/emm_zaid).
+Created by [@emm_zaid](https://x.com/emm_zaid).
