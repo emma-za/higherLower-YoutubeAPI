@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0f0f0f">
+    <title>Higher or Lower · YouTube Views</title>
+    <link rel="icon" type="image/png" href="pest.png">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header class="topbar">
+        <a class="brand" href="./" aria-label="Reiniciar Higher or Lower">
+            <img class="youtube-logo" src="https://www.logo.wine/a/logo/YouTube/YouTube-Icon-Full-Color-Logo.wine.svg" alt="">
+            <span class="brand-name">Higher or Lower</span>
+        </a>
+
+        <div class="score-container" aria-label="Puntuación de la partida">
+            <div class="score-stat">
+                <span class="stat-label">Score</span>
+                <strong id="score">0</strong>
+            </div>
+            <div class="score-divider" aria-hidden="true"></div>
+            <div class="score-stat">
+                <span class="stat-label">Best</span>
+                <strong id="best">0</strong>
+            </div>
+        </div>
+
+        <a class="creator" href="https://x.com/emm_zaid" target="_blank" rel="noopener noreferrer">
+            <span class="creator-copy">
+                <small>Created by</small>
+                <strong>@emm_zaid</strong>
+            </span>
+            <img src="logo.jpg" alt="Perfil de @emm_zaid">
+        </a>
+    </header>
+
+    <main class="game-shell">
+        <section class="game-stage" aria-label="Compara las visualizaciones de dos videos">
+            <article class="video-panel video-panel--known">
+                <div class="thumb-container" onclick="playWithSound(1)">
+                    <img class="thumb" id="thumb1" src="" alt="Miniatura del primer video">
+                    <div class="play-overlay" id="play1" aria-hidden="true">
+                        <span class="play-triangle"></span>
+                    </div>
+                </div>
+                <div class="panel-gradient" aria-hidden="true"></div>
+
+                <div class="panel-content">
+                    <div class="channel-info">
+                        <img id="icon1" src="" alt="Icono del canal">
+                        <span id="title1" class="title"></span>
+                    </div>
+
+                    <div class="view-result view-result--known">
+                        <span class="view-kicker">This video has</span>
+                        <strong class="views" id="views1"></strong>
+                    </div>
+                </div>
+            </article>
+
+            <article class="video-panel video-panel--challenge">
+                <div class="thumb-container" onclick="playWithSound(2)">
+                    <img class="thumb" id="thumb2" src="" alt="Miniatura del segundo video">
+                    <div class="play-overlay" id="play2" aria-hidden="true">
+                        <span class="play-triangle"></span>
+                    </div>
+                </div>
+                <div class="panel-gradient" aria-hidden="true"></div>
+
+                <div class="panel-content">
+                    <div class="channel-info">
+                        <img id="icon2" src="" alt="Icono del canal">
+                        <span id="title2" class="title"></span>
+                    </div>
+
+                    <div class="challenge-block">
+                        <p class="question">Does it have more or fewer views?</p>
+                        <p class="views hidden-views" id="views2"></p>
+
+                        <div class="choice-area">
+                            <button class="choice-button choice-button--higher" type="button" onclick="choose('higher')">
+                                <span>Higher</span>
+                                <svg viewBox="0 0 24 24" aria-hidden="true">
+                                    <path d="M12 5 5 12l1.4 1.4 4.6-4.6V19h2V8.8l4.6 4.6L19 12l-7-7Z"></path>
+                                </svg>
+                            </button>
+                            <button class="choice-button choice-button--lower" type="button" onclick="choose('lower')">
+                                <span>Lower</span>
+                                <svg viewBox="0 0 24 24" aria-hidden="true">
+                                    <path d="m12 19 7-7-1.4-1.4-4.6 4.6V5h-2v10.2l-4.6-4.6L5 12l7 7Z"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <div class="versus" aria-hidden="true">
+                <span>VS</span>
+            </div>
+        </section>
+    </main>
+
+    <div id="loseModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="gameOverTitle">
+        <div class="modal-content" id="modalContent">
+            <div class="modal-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                    <path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm3.5 13.1-1.4 1.4L12 14.4l-2.1 2.1-1.4-1.4 2.1-2.1-2.1-2.1 1.4-1.4 2.1 2.1 2.1-2.1 1.4 1.4-2.1 2.1 2.1 2.1Z"></path>
+                </svg>
+            </div>
+            <span class="modal-eyebrow">Your streak ended</span>
+            <h2 id="gameOverTitle">Game over</h2>
+            <p id="recordText">Score: 0</p>
+            <button type="button" onclick="restartGame()">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M17.65 6.35A7.95 7.95 0 0 0 12 4a8 8 0 1 0 7.75 10h-2.1A6 6 0 1 1 12 6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35Z"></path>
+                </svg>
+                Play again
+            </button>
+        </div>
+        <div class="loader" id="loadingSpinner" aria-label="Cargando"></div>
+    </div>
+
+    <div id="confetti-container" aria-hidden="true"></div>
+    <script src="js/app.js?v=4"></script>
+</body>
+</html>
