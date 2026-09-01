@@ -2,11 +2,13 @@
 header("Content-Type: application/json");
 
 // Incluye la key desde fuera de public_html
-require_once dirname(__DIR__) . '/api_keys.php';
+$API_KEY = getenv('YOUTUBE_API_KEY');
 
-$videoId = $_GET['id'] ?? '';
-if (!$videoId) {
-    echo json_encode(["error" => "No video ID provided"]);
+if (!$API_KEY) {
+    http_response_code(500);
+    echo json_encode([
+        'error' => 'YouTube API key is not configured'
+    ]);
     exit;
 }
 
